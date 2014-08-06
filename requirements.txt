@@ -1,0 +1,6 @@
+argparse==1.2.1
+configparser==3.3.0r2
+npyscreen==4.3.5
+prettytable==0.7.2
+selenium==2.42.1
+wsgiref==0.1.2
