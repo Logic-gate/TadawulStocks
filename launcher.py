@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# PyStocks v 0.1 - launcher.py
+# TadawulStocks v 0.1 - launcher.py
 # Copyright (C) <2014>  mad_dev(A'mmer Almadani)
 #
 # This Source Code Form is subject to the terms of the Mozilla Public
@@ -63,7 +63,7 @@ class ActionControllerSearch(npyscreen.ActionControllerSimple):
             self.parent.wMain.values = ["refresh: Launch the portfolio refresher(n); n = 10 sec",
                                         "action: Launch the buy and sell window",
                                         "my: Launch your portfolio view",
-                                        "stocks: Show all stocks",
+                                        "stock: Show all stocks",
                                         "fetch: Fetch prices from Tadawul.com.sa",
                                         "log_sell: Show the sell log",
                                         "log_buy: Show the buy log",]

@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 
-# PyStocks v 0.1 - refresh.py
+# TadawulStocks v 0.1 - refresh.py
 # Copyright (C) <2014>  mad_dev(A'mmer Almadani)
 #
 # This Source Code Form is subject to the terms of the Mozilla Public

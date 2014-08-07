@@ -1,4 +1,4 @@
-PyStocks
+TadawulStocks
 ======
  
 A minimalistic Python based portfolio manager.
