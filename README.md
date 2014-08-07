@@ -83,7 +83,7 @@ In the **command** view(the one you launched the **/action** command with) type
 ```
 /stock
 ```
-A list of all Tadawul stocks will render in the **log** view. Press **lower_case(L)** l. A contained popup will appear for you to search with. Type the name of the stock you wish find; only upper case search is allowed.
+A list of all Tadawul stocks will render in the **log** view. Press **lower_case(L)** l. A contained popup will appear for you to search with. Type the name of the stock you wish to find; only upper case search is allowed.
 
 Issue the refresh command
 ```
