@@ -52,7 +52,8 @@ You will be presented with a *mutt* like window. The top section is the **log** 
 /help
 
 ```
-<img src="http://www.sysbase.org/TadawulStock/launcher.png">
+<img src="http://www.sysbase.org/TadawulStock/launcher.png">  
+
 The **log** view should return all available commands
 ```
 refresh: Launch the portfolio refresher(n); n = 10 sec
@@ -98,7 +99,8 @@ Issue the portfolio view command
 ```
 /my
 ```
-<img src="http://www.sysbase.org/TadawulStock/view.png">
+<img src="http://www.sysbase.org/TadawulStock/view.png">  
+
 You will notice that the price is set 1 SAR; all new stocks will have a price of 1 SAR to them. You will need to issue the fetch command in order to get the latest price from tadawul.com.sa
 
 ```
