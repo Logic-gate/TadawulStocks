@@ -52,6 +52,7 @@ You will be presented with a *mutt* like window. The top section is the **log** 
 /help
 
 ```
+<img src="http://www.sysbase.org/TadawulStock/launcher.png">
 The **log** view should return all available commands
 ```
 refresh: Launch the portfolio refresher(n); n = 10 sec
@@ -72,6 +73,7 @@ Issue the action command
 /action
 ```
 A new terminal should popup with with two options
+<img src="http://www.sysbase.org/TadawulStock/action.png">
 ```
 Option      (X)Buy
             ( )Sell
@@ -84,6 +86,7 @@ In the **command** view(the one you launched the **/action** command with) type
 /stock
 ```
 A list of all Tadawul stocks will render in the **log** view. Press **lower_case(L)** l. A contained popup will appear for you to search with. Type the name of the stock you wish to find; only upper case search is allowed.
+<img src="http://www.sysbase.org/TadawulStock/stock.png">
 
 Issue the refresh command
 ```
@@ -95,7 +98,9 @@ Issue the portfolio view command
 ```
 /my
 ```
+<img src="http://www.sysbase.org/TadawulStock/view.png">
 You will notice that the price is set 1 SAR; all new stocks will have a price of 1 SAR to them. You will need to issue the fetch command in order to get the latest price from tadawul.com.sa
+
 ```
 /fetch
 ```
@@ -119,20 +124,20 @@ Detailed Architecture
 PyStocks
 |
 ├── conf
-│   ├── info.conf
-│   └── stocks.conf
+│   ├── info.conf
+│   └── stocks.conf
 ├── future
-│   └── chart.py
+│   └── chart.py
 ├── log
-│   ├── buy.log
-│   ├── MyStock.li
-│   └── sell.log
+│   ├── buy.log
+│   ├── MyStock.li
+│   └── sell.log
 ├── market
-│   ├── __init__.py
-│   └── TadawulStocks.py
+│   ├── __init__.py
+│   └── TadawulStocks.py
 ├── rss
-│   ├── feeds.db
-│   └── rss.py
+│   ├── feeds.db
+│   └── rss.py
 ├── action.py
 ├── feeder.py
 ├── launcher.py
