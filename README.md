@@ -25,7 +25,7 @@ wsgiref==0.1.2
 ```
 ---
 
-PyStocks relies on phantomJS for retrieving Tadawul's market data.  
+TadawulStocks relies on phantomJS for retrieving Tadawul's market data.  
 Go to http://phantomjs.org/download.html and download your box's version.  
 
 
@@ -43,7 +43,7 @@ phantomJS=/path/to/phantomjs-x.x.x-linux-xxx-xx/bin/phantomjs
 
 How TO
 ---
-Assuming you installed all the prerequisites, open a terminal in the **PyStocks** directory and type:
+Assuming you installed all the prerequisites, open a terminal in the **TadawulStocks** directory and type:
 ```
 python launcher.py
 ```
@@ -107,7 +107,7 @@ You will notice that the price is set 1 SAR; all new stocks will have a price of
 ```
 /fetch
 ```
-Note: On average it will take 2 minutes to fetch the data. The delay is from Tadawul and my method of retrieving data.
+Note: On average it will take 2 minutes to fetch the data. The delay is from tadawul.com.sa; it could also be attributed to that fact the I am using a webdriver to parse the data.
 
 All of your activities can be viewed by issuing the log commands
 ```
@@ -124,7 +124,7 @@ Detailed Architecture
 
 **Tree View**
 ```
-PyStocks
+TadawulStocks
 |
 ├── conf
 │   ├── info.conf
@@ -188,7 +188,7 @@ As stated in the aforementioned installation section of this document, the ***ph
 
 The **ACTION, MAIN, VIEW,** and **FEED** sections contain the emulator's title and geometry settings. These are relative to the emulator in use; if you changed the emulator to *terminator* for example, you will need to adjust the values of the ***emulator_geo_title*** option as well. You can also change the foreground and background colours to your liking; please refer to your emulator's documentation for more information on customizing it. The latter and former sections(except ***phantomJS***) are required by **launcher.py**.
 ***
-The **stocks.conf** contains information retaining your stocks. It should not be edited manually, **action.py** and **feed.py** will take care of everything.  
+The **stocks.conf** contains information retaining your stocks. It should not be edited manually, **action.py** and **feeder.py** will take care of everything.  
 
 Example of **stocks.conf**
 ```
@@ -270,4 +270,4 @@ Just to clarify, **refresh.py** writes the rendered table(stocks) to **MyStock.l
 
 ***
 ###future & rss directories
-Meant for future improvements to **PyStocks**
+Meant for future improvements to **TadawulStocks**
