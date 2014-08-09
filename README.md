@@ -86,7 +86,7 @@ In the **command** view(the one you launched the **/action** command with) type
 ```
 /stock
 ```
-A list of all Tadawul stocks will render in the **log** view. Press **lower_case(L)** l. A contained popup will appear for you to search with. Type the name of the stock you wish to find; only upper case search is allowed.  
+A list of all Tadawul stocks will render in the **log** view. Press **CTRL-F**. A contained popup will appear for you to search with. Type the name of the stock you wish to find; only upper case search is allowed.  
 
 <img src="http://www.sysbase.org/TadawulStock/stock.png">
 
@@ -260,7 +260,7 @@ All commands must start with a slash
 /
 ```
 
-When the **Log** view is focused, you can search its contents by pressing on **lower_case(L)**
+When the **Log** view is focused, you can search its contents by pressing on **CTRL-F**
 
 ***
 ###refresh.py & view.py

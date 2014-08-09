@@ -40,7 +40,9 @@ __email__ = 'mail@sysbase.org'
 class ActionControllerSearch(npyscreen.ActionControllerSimple):
     def create(self):
         npyscreen.setTheme(npyscreen.Themes.TransparentThemeLightText)
+
         self.add_action('^/.*', self.write2main, True)
+
     
     def action(self, command, msg):
             current = time.strftime('%c')
@@ -115,6 +117,9 @@ class FmSearchActive(npyscreen.FormMuttActiveTraditional):
 class LaunchApp(npyscreen.NPSApp):
     def main(self):
         F = FmSearchActive()
+        #Thanks to N.Cole
+        del F.wMain.handlers[ord('l')] #remove 'l' as find
+        F.wMain.handlers.update({"^F": F.wMain.h_set_filter}) #add CTRL-F
         F.wStatus1.value = "LOG"
         F.wStatus2.value = "COMMAND"
         F.wMain.values = ['Command must start with /','/help for commands']
