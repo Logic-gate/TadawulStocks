@@ -52,7 +52,7 @@ def Search(Tadawul_code, sector):
 		name = data[0]
 		number = data[1]
 		code = data[2]
-		last_price = int(number) + 1
+		last_price = int(number)
 		#print name
 		code_lists.append(last_price)
 		name_lists.append(name)
@@ -83,6 +83,7 @@ def Feeder(stock):
 	todays_all_stocks_link = d.find_element_by_link_text('جميع الأسهم اليوم').click()
 	time.sleep(0.5)
 	find_all = d.find_elements_by_class_name('calibri-12')
+	#print find_all
 	time.sleep(0.5)
 	print 'Fetching...'
 	configGet = Config('Get')
