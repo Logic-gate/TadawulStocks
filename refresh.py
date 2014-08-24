@@ -65,7 +65,7 @@ def MyStock():
         perce = float(total) / int(total_worth) * 100
         profit = (Decimal(price) - Decimal(buy_price)) / Decimal(buy_price) * 100
         t.add_row([code, name, str(price) + ' SAR', shares, str(total) + " SAR", perce, str(buy_price) + " SAR", profit, purch])
-    print 'Refreshing Portfolio...'
+    print "Refreshing Portfolio...\nTS:%s" %time.time()
     return tot, t
 
 
@@ -123,10 +123,11 @@ def Write_(data):
     x = open(path, 'w+')
     x.write(data)
     x.close()
-    print 'MyStock.li Saved %s\n' %time.time()
+    
+    #print 'MyStock.li Saved %s\n' %time.time()
 
 
-def repeat(fun): 
+def repeat(fun):
     my_stock = MyStock()
     Write_(str(my_stock[0])+'\n'+str(my_stock[1]))
     fun.enter(10, 1, repeat, (fun,))
