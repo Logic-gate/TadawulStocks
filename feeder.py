@@ -69,29 +69,20 @@ def Feeder(stock):
 	phantomJS = Conf().get('SYS', 'phantomJS')
 	webdriver.DesiredCapabilities.PHANTOMJS['phantomjs.page.customHeaders.User-Agent'] = 'Mozilla/5.0 (X11; Linux i686; rv:25.0) Gecko/20100101 Firefox/25.0'
 	d = webdriver.PhantomJS(phantomJS)
-
-
-	#print 'Obtained phantomJS'
 	L = 'http://www.tadawul.com.sa'
 	print 'Connecting...'
-	time.sleep(5)
 	d.get(L)
 	stock_market_link = d.find_element_by_link_text('سوق الاسهم').click()
-	
 	all_stocks_link = d.find_element_by_link_text('جميع الأسهم').click()
-	time.sleep(0.5)
 	todays_all_stocks_link = d.find_element_by_link_text('جميع الأسهم اليوم').click()
-	time.sleep(0.5)
 	find_all = d.find_elements_by_class_name('calibri-12')
-	#print find_all
-	time.sleep(0.5)
 	print 'Fetching...'
 	configGet = Config('Get')
-	#print stock
+	print stock
 	for ii, i in zip(configGet.sections(), stock):
-		#print ii, i
+		print find_all[int(i)+15].text, ii, i
 		if configGet.has_section(ii) == True:
-				last_price = find_all[int(i)].text
+				last_price = find_all[int(i)+15].text
 				last_vol =  find_all[int(i)+1].text
 				SetLast('Price', last_price, ii)
 	d.close()

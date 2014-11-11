@@ -28,7 +28,7 @@ from collections import defaultdict
 __author__ = 'Amer Almadani'
 __email__ = 'mail@sysbase.org'
 
-
+#TRADEUNION SF
 def TadawulStocks(sector):
 	'''
 	stocks(str(sector)) -> sector list
@@ -84,7 +84,8 @@ def TadawulStocks(sector):
 	 		 'BJAZ:93:1020',
 	 		 'BSFR:135:1050',
 	 		 'SAMBA:177:1090',
-	 		 'RIBL:79:1010']
+	 		 'RIBL:79:1010',
+	 		 'ALAHLI:219:1180']
 
 	petro = ['Advanced:389:2330', 
 					 'ALCO:305:2170',
@@ -120,7 +121,7 @@ def TadawulStocks(sector):
 			  'AlHammadi:715:4007',
 			  'ALDREED:785:4200',
 			  'ALKHALEEJTRNG:813:4290',
-			  'Dallah Health:673:4004',
+			  'DallahHealth:673:4004',
 			  'ALHOKAIR:799:4240',
 			  'AHFCO:757:4180',
 			  'Jarir:771:4190',
@@ -137,7 +138,7 @@ def TadawulStocks(sector):
 	agri_food = ['JADCO:985:6020',
 				 'ALMARAI:901:2280',
 				 'ANAAMHOLDING:915:4061',
-				 'SHARQIYADEV CO:1027:6060',
+				 'SHARQIYADEVCO:1027:6060',
 				 'BISACO:1055:6080',
 				 'HB:929:6001',
 				 'HerfyFoods:943:6002',
@@ -165,7 +166,7 @@ def TadawulStocks(sector):
 				 'ALAHLITAKAFUL:1353:8130',
 				 'AlinmaTokioM:1633:8312',
 				 'JaziraTakaful:1185:8012',
-				 'ALLIANZ SF:1227:8040',
+				 'ALLIANZSF:1227:8040',
 				 'ACIG:1381:8150',
 				 'AmanaInsurance:1605:8310',
 				 'AICC:1395:8160',
@@ -188,7 +189,7 @@ def TadawulStocks(sector):
 				 'Solidarity:1577:8290',
 				 'TAWUNIYA:1157:8010',
 				 'MEDGULF:1213:8030',
-				 'TRADE UNION:1409:8170',
+				 'TRADEUNION:1409:8170',
 				 'UCA:1437:8190',
 				 'Wataniya:1591:8300',
 				 'WEQAYATAKAFUL:1479:8220']
@@ -289,6 +290,12 @@ def GetData(code, sector):
 			code = x[2]
 
 			return name, number, code
+
+def GetCodes(sector):
+	code_list = []
+	for i in GetList(sector):
+		code_list.append(i.split()[1])
+	return code_list
 
 #GetList('Banks')
 #stocks('Banks')

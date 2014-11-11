@@ -59,7 +59,6 @@ LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
 ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
 (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-
 '''
 
 import urllib2
@@ -72,9 +71,15 @@ import matplotlib.dates as mdates
 from matplotlib.finance import candlestick
 import matplotlib
 import pylab
+import re
+import string
+import csv
 matplotlib.rcParams.update({'font.size': 9})
 
 
+
+month_dict = {"Jan":'1',"Feb":'2',"Mar":'3',"Apr":'4', "May":'5', "Jun":'6',
+	   "Jul":'7',"Aug":'8',"Sep":'9',"Oct":'10',"Nov":'11',"Dec":'12'}
 
 def rsiFunc(prices, n=14):
     deltas = np.diff(prices)
@@ -126,21 +131,57 @@ def computeMACD(x, slow=26, fast=12):
     return emaslow, emafast, emafast - emaslow
 
 
+
+def to_dict(name):
+	return month_dict[name]
+
 def graphData(stock,MA1,MA2):
     '''
         Use this to dynamically pull a stock:
     '''
     try:
-        print 'Currently Pulling',stock
-        print str(datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d %H:%M:%S'))
+        #print 'Currently Pulling',stock
+        #print str(datetime.datetime.fromtimestamp(int(time.time())).strftime('%Y-%m-%d %H:%M:%S'))
         #Keep in mind this is close high low open data from Yahoo
-        urlToVisit = 'http://chartapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=10y/csv'
+        #urlToVisit = 'http://chartapi.finance.yahoo.com/instrument/1.0/'+stock+'/chartdata;type=quote;range=10y/csv'
         stockFile =[]
         try:
-            sourceCode = urllib2.urlopen(urlToVisit).read()
-            splitSource = sourceCode.split('\n')
+            #sourceCode = urllib2.urlopen(urlToVisit).read()
+            #sourceCode = open('4190.csv').read()
+            sourceCode = open('../historical_data/'+stock+'.csv', 'r').read().decode("utf-8-sig").encode("utf-8")
+
+            if len(re.findall('\d{4}-\d+-\d+', sourceCode)) != 0:
+            	date_filter = '%Y-%m-%d' #2014-12-29
+            	remove_space = sourceCode.replace(' ', "")
+            	splitSource = remove_space.split('\n')
+
+            if len(re.findall('\d{2}-\w{3}-\d+', sourceCode)) != 0:
+            	date_filter = '%d-%m-%y' #29-Oct-14
+            	replace_month = dict((re.escape(k), v) for k, v in month_dict.iteritems())
+            	patt = re.compile("|".join(replace_month.keys()))
+            	data = patt.sub(lambda m: replace_month[re.escape(m.group(0))], sourceCode)
+            	splitSource = data.split('\n')
+
+            if len(re.findall('\d{4}/\d{2}/\d{2}', sourceCode)) != 0:
+            	date_filter = '%Y/%m/%d' #2014/12/29
+            	remove_space = sourceCode.replace(' ', "")
+            	#print remove_space
+            	splitSource = remove_space.split('\n')
+            	#print splitSource
+            if len(re.findall('\d{8},', sourceCode)) !=0:
+                date_filter = '%Y%m%d'
+                splitSource = sourceCode.split('\n')
+
+           
+            
+            	
             for eachLine in splitSource:
-                splitLine = eachLine.split(',')
+               	#print eachLine
+                for n,i in enumerate(eachLine.split(',')):
+                	if i=='-':
+                		splitLine=eachLine.split(',')[n]='0'
+                	else:
+                		splitLine = eachLine.split(',')
                 if len(splitLine)==6:
                     if 'values' not in eachLine:
                         stockFile.append(eachLine)
@@ -149,13 +190,13 @@ def graphData(stock,MA1,MA2):
     except Exception,e:
         print str(e), 'failed to pull pricing data'
     try:   
-        date, closep, highp, lowp, openp, volume = np.loadtxt(stockFile,delimiter=',', unpack=True,
-                                                              converters={ 0: mdates.strpdate2num('%Y%m%d')})
+        date, closep, openp, highp, lowp, volume = np.loadtxt(stockFile,delimiter=',', unpack=True,
+                                                              converters={ 0: mdates.strpdate2num(date_filter)})
         x = 0
         y = len(date)
         newAr = []
         while x < y:
-            appendLine = date[x],openp[x],closep[x],highp[x],lowp[x],volume[x]
+            appendLine = date[x],closep[x],openp[x],highp[x],lowp[x],volume[x]
             newAr.append(appendLine)
             x+=1
             
@@ -163,18 +204,21 @@ def graphData(stock,MA1,MA2):
         Av2 = movingaverage(closep, MA2)
 
         SP = len(date[MA2-1:])
-            
-        fig = plt.figure(facecolor='#07000d')
 
-        ax1 = plt.subplot2grid((6,4), (1,0), rowspan=4, colspan=4, axisbg='#07000d')
-        candlestick(ax1, newAr[-SP:], width=.6, colorup='#53c156', colordown='#ff1717')
+            
+        fig = plt.figure(facecolor='#000000')
+
+        ax1 = plt.subplot2grid((6,4), (1,0), rowspan=4, colspan=4, axisbg='#000000')
+        candlestick(ax1, newAr[-SP:], width=.6, colorup='#53c156', colordown='r', alpha=1.0)
 
         Label1 = str(MA1)+' SMA'
         Label2 = str(MA2)+' SMA'
 
         ax1.plot(date[-SP:],Av1[-SP:],'#e1edf9',label=Label1, linewidth=1.5)
         ax1.plot(date[-SP:],Av2[-SP:],'#4ee6fd',label=Label2, linewidth=1.5)
-        
+
+       
+
         ax1.grid(True, color='w')
         ax1.xaxis.set_major_locator(mticker.MaxNLocator(10))
         ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
@@ -184,8 +228,8 @@ def graphData(stock,MA1,MA2):
         ax1.spines['left'].set_color("#5998ff")
         ax1.spines['right'].set_color("#5998ff")
         ax1.tick_params(axis='y', colors='w')
-        plt.gca().yaxis.set_major_locator(mticker.MaxNLocator(prune='upper'))
         ax1.tick_params(axis='x', colors='w')
+        plt.gca().yaxis.set_major_locator(mticker.MaxNLocator(prune='upper'))
         plt.ylabel('Stock price and Volume')
 
         maLeg = plt.legend(loc=9, ncol=2, prop={'size':7},
@@ -229,11 +273,19 @@ def graphData(stock,MA1,MA2):
         ax1v.tick_params(axis='x', colors='w')
         ax1v.tick_params(axis='y', colors='w')
 
+
         
         ax2 = plt.subplot2grid((6,4), (5,0), sharex=ax1, rowspan=1, colspan=4, axisbg='#07000d')
+        nslow= 26
+        nfast = 1
+        nema = 9
 
-        
-
+        emaslow, emafast, macd = computeMACD(closep)
+        ema9 = ExpMovingAverage(macd, nema)
+        ax2.plot(date[-SP:], macd[-SP:])
+        ax2.plot(date[-SP:], ema9[-SP:])
+        ax2.fill_between(date[-SP:], macd[-SP:]-ema9[-SP:], 0, alpha=0.5, facecolor='#00ffe8', edgecolor='#00ffe8')
+        plt.gca().yaxis.set_major_locator(mticker.MaxNLocator(prune='upper'))
         # START NEW INDICATOR CODE #
 
         
@@ -250,16 +302,19 @@ def graphData(stock,MA1,MA2):
         ax2.spines['right'].set_color("#5998ff")
         ax2.tick_params(axis='x', colors='w')
         ax2.tick_params(axis='y', colors='w')
+        plt.ylabel('MACD', color='w')
+        plt.gca().yaxis.set_major_locator(mticker.MaxNLocator(prune='upper'))
+        
         ax2.yaxis.set_major_locator(mticker.MaxNLocator(nbins=5, prune='upper'))
-
+        ax2.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
 
 
 
         
         for label in ax2.xaxis.get_ticklabels():
-            label.set_rotation(45)
+        	label.set_rotation(45)
 
-        plt.suptitle('JARIR',color='w')
+        plt.suptitle(stock,color='w')
 
         plt.setp(ax0.get_xticklabels(), visible=False)
         plt.setp(ax1.get_xticklabels(), visible=False)
