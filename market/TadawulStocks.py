@@ -74,17 +74,17 @@ def TadawulStocks(sector):
 		              Please check tadawul.com.sa for more info.			
 
 	'''
-	banks = ['SaudiInvestment:107:1030',
-	 		 'SaudiHollandi:121:1040',
-	 		 'SABB:149:1060',
-	 		 'ARNB:163:1080',
-	 		 'ALINMA:219:1150',
-	 		 'RJHI:191:1120',
-	 		 'ALBI:205:1140',
-	 		 'BJAZ:93:1020',
-	 		 'BSFR:135:1050',
-	 		 'SAMBA:177:1090',
-	 		 'RIBL:79:1010',
+	banks = ['SaudiInvestment:93:1030',
+	 		 'SaudiHollandi:107:1040',
+	 		 'SABB:135:1060',
+	 		 'ARNB:149:1080',
+	 		 'ALINMA:205:1150',
+	 		 'RJHI:177:1120',
+	 		 'ALBI:191:1140',
+	 		 'BJAZ:79:1020',
+	 		 'BSFR:121:1050',
+	 		 'SAMBA:163:1090',
+	 		 'RIBL:65:1010',
 	 		 'ALAHLI:219:1180']
 
 	petro = ['Advanced:389:2330', 
